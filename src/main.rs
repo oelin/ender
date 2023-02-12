@@ -1,36 +1,61 @@
-use clap::Parser;
+use clap::{Parser, Subcommand};
+mod commands;
 
 
-/// Perfect secrecy for everyone!
-#[derive(Parser, Debug)]
+#[derive(Parser)]
 #[command(author, version, about, long_about = None)]
-struct Arguments {
-   /// Encrypt a message.
-   #[arg(short, long, default_value_t = true)]
-   encrypt: bool,
+struct Cli {
 
-   /// Decrypt a message.
-   #[arg(short, long, default_value_t = false)]
-   decrypt: bool,
+        #[command(subcommand)]
+        command: Commands,
+}
 
-   /// Generate a key.
-   #[arg(short, long, default_value_t = false)]
-   generate: bool,
 
-   /// Key file.
-   #[arg(short, long, default_value_t = String::from("key"))]
-   key: String,
+#[derive(Subcommand, Debug)]
+enum Commands {
 
-   /// Message file.
-   #[arg(short, long, default_value_t = String::from("message"))]
-   message: String,
+        /// Decrypt a message using an Esther key.
+        Decrypt {
+                /// Path of the key.
+                #[arg(short, long, value_name = "PATH")]
+                key: String,
 
-   /// Message/key size in megabytes.
-   #[arg(short, long, default_value_t = 5)]
-   size: u32,
+                /// Path of the message.
+                #[arg(short, long, value_name = "PATH")]
+                message: String,
+        },
+
+        /// Encrypt a message using an Esther key.
+        Encrypt {
+                /// Path of the key.
+                #[arg(short, long, value_name = "PATH")]
+                key: String,
+
+                /// Path of the message.
+                #[arg(short, long, value_name = "PATH")]
+                message: String,
+        },
+
+        /// Create a new Esther key.
+        New {
+                /// Path of the key.
+                path: String,
+
+                /// Size of the key in kB.
+                #[arg(short, long, default_value_t = 1000)]
+                size: u32,
+        },
 }
 
 
 fn main() {
-   Arguments::parse();
+        let cli = Cli::parse();
+
+        let command = match &cli.command {
+                Commands::Decrypt {..} => commands::decrypt,
+                Commands::Encrypt {..} => commands::encrypt,
+                Commands::New {..} => commands::new,
+        };
+
+        command()//(&cli.command);
 }

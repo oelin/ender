@@ -1,5 +1,6 @@
 # Esther
-Perfect secrecy for everyone 🔐. A tool for conducting information-theoretically secure cryptography using a delayed-send OTP scheme.
+
+Perfect secrecy for everyone 🔐. A tool for conducting information-theoretically secure cryptography using a stalled-send OTP scheme. 
 
 ```
 Usage: esther <COMMAND>

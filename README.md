@@ -1,14 +1,14 @@
-# Esther
+# Ender
 
 Perfect secrecy for everyone 🔐. A tool for conducting information-theoretically secure cryptography using a stalled-send OTP scheme. 
 
 ```
-Usage: esther <COMMAND>
+Usage: ender <COMMAND>
 
 Commands:
-  decrypt  Decrypt a message using an Esther key
-  encrypt  Encrypt a message using an Esther key
-  new      Create a new Esther key
+  decrypt  Decrypt a message using an Ender key
+  encrypt  Encrypt a message using an Ender key
+  new      Create a new Ender key
   help     Print this message or the help of the given subcommand(s)
 
 Options:
